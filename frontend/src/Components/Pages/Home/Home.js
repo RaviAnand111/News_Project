@@ -1,11 +1,11 @@
 import React from "react";
-import Navbar from "../../PageComponents/Navabar/Navbar";
+import HomeNavbar from "../../PageComponents/HomeNavbar/HomeNavbar";
 import "./Home.css";
 
 function Home() {
   return (
     <div className="home">
-      <Navbar />
+      <HomeNavbar />
       <div className="news-heading">
         <p className="news-content"> News from all around the world</p>
       </div>
