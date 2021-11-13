@@ -1,11 +1,12 @@
 module.exports = (sequelize, DataTypes) => {
     
-    const Country = sequelize.define("country", {
-        country_id: {
+    const Location = sequelize.define("location", {
+        location_id: {
             type: DataTypes.INTEGER,
-            primaryKey: true
+            primaryKey: true,
+            autoIncrement: true
         },
-        name: {
+        country: {
             type: DataTypes.STRING(20),
             allowNull: false
         },
@@ -19,5 +20,5 @@ module.exports = (sequelize, DataTypes) => {
         underscored: true
     }
     )
-    return Country
+    return Location
 }

@@ -1,17 +1,17 @@
 module.exports = (sequelize, DataTypes) => {
     
     const Source = sequelize.define("source", {
-        s_id: {
+        source_id: {
             type: DataTypes.INTEGER,
             primaryKey: true
         },
-        company: {
+        name: {
             type: DataTypes.STRING(20),
-            allowNull: false
+            allowNull: true
         },
         author: {
             type: DataTypes.STRING(20),
-            allowNull: false
+            allowNull: true
         }
     }, {
         freezeTableName: true,

@@ -1,8 +1,8 @@
 module.exports = {
-  HOST: "localhost",
-  USER: "harbor",
-  PASSWORD: "harbor",
-  DB: "newsApiBackend",
+  HOST: "bo49jn60jn2g2cgsv18t-mysql.services.clever-cloud.com",
+  USER: "uwek4v5dybcqzmgg",
+  PASSWORD: "niSHwE4CdBhf2sjf8QvH",
+  DB: "bo49jn60jn2g2cgsv18t",
   dialects: "mysql",
 
   pool: {
