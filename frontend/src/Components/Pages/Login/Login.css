@@ -13,3 +13,19 @@
     height: 100%;
   }
 }
+
+.form-check{
+  margin: 10px 0;
+}
+.forgot{
+  margin: 10px 0;
+}
+
+.brand-icon{
+  box-shadow: 0 5px 5px rgba(0,0,0,0.30), 0 5px 8px rgba(0,0,0,0.22);
+	border-radius: 47%;
+}
+
+.brand-icon:hover{
+box-shadow: 0 5px 5px rgba(0,0,0,0.30), 0 10px 20px rgba(0,0,0,0.22);
+}

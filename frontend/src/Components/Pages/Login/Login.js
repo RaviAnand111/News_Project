@@ -1,11 +1,13 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faFacebook,
-  faLinkedin,
   faTwitter,
   faGoogle,
+  faFacebookF,
+  faLinkedin,
 } from "@fortawesome/free-brands-svg-icons";
+import "./Login.css";
+
 function Login() {
   return (
     <section className="">
@@ -24,23 +26,23 @@ function Login() {
                 <p className="lead fw-normal mb-0 me-3">Sign in with</p>
                 <button
                   type="button"
-                  className="btn btn-primary btn-floating mx-1"
+                  className="btn btn-primary btn-floating mx-1  brand-icon"
                 >
-                  <FontAwesomeIcon icon={faFacebook} size="2x" />
+                  <FontAwesomeIcon icon={faFacebookF} />
                 </button>
 
                 <button
                   type="button"
-                  className="btn btn-primary btn-floating mx-1"
+                  className="btn btn-primary btn-floating mx-1   brand-icon"
                 >
-                  <FontAwesomeIcon icon={faTwitter} size="2x" />
+                  <FontAwesomeIcon icon={faTwitter} />
                 </button>
 
                 <button
                   type="button"
-                  className="btn btn-primary btn-floating mx-1"
+                  className="btn btn-primary btn-floating mx-1 brand-icon"
                 >
-                  <FontAwesomeIcon icon={faLinkedin} size="2x" />
+                  <FontAwesomeIcon icon={faLinkedin} />
                 </button>
               </div>
 
@@ -56,9 +58,9 @@ function Login() {
                   className="form-control form-control-lg"
                   placeholder="Enter a valid email address"
                 />
-                <label className="form-label" htmlFor="form3Example3">
+                {/* <label className="form-label" htmlFor="form3Example3">
                   Email address
-                </label>
+                </label> */}
               </div>
 
               {/* <!-- Password input --> */}
@@ -69,9 +71,9 @@ function Login() {
                   className="form-control form-control-lg"
                   placeholder="Enter password"
                 />
-                <label className="form-label" htmlFor="form3Example4">
+                {/* <label className="form-label" htmlFor="form3Example4">
                   Password
-                </label>
+                </label> */}
               </div>
 
               <div className="d-flex justify-content-between align-items-center">
@@ -87,7 +89,7 @@ function Login() {
                     Remember me
                   </label>
                 </div>
-                <a href="#!" className="text-body">
+                <a href="#!" className="text-body forgot">
                   Forgot password?
                 </a>
               </div>
@@ -121,16 +123,16 @@ function Login() {
         {/* <!-- Right --> */}
         <div>
           <a href="#!" className="text-white me-4">
-            <FontAwesomeIcon icon={faFacebook} size="2x" />
+            <FontAwesomeIcon icon={faFacebookF} />
           </a>
           <a href="#!" className="text-white me-4">
-            <FontAwesomeIcon icon={faTwitter} size="2x" />
+            <FontAwesomeIcon icon={faTwitter} />
           </a>
           <a href="#!" className="text-white me-4">
-            <FontAwesomeIcon icon={faGoogle} size="2x" />
+            <FontAwesomeIcon icon={faGoogle} />
           </a>
           <a href="#!" className="text-white">
-            <FontAwesomeIcon icon={faLinkedin} size="2x" />
+            <FontAwesomeIcon icon={faLinkedin} />
           </a>
         </div>
         {/* <!-- Right --> */}
