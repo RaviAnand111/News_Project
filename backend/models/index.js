@@ -38,6 +38,14 @@ db.categories = require('./categoryModel')(sequelize, DataTypes)
 db.locations = require('./locationModel')(sequelize, DataTypes)
 db.sources = require('./sourceModel')(sequelize, DataTypes)
 
+db.admins.hasMany(db.users, {
+    foreignKey: 'admin_user_id',
+    as: 'user'
+})
+db.users.belongsTo(db.admins, {
+    foreignKey: 'admin_user_id',
+    as: 'admin'
+})
 
 db.categories.hasMany(db.newss, {
     foreignKey: 'category_id',
@@ -52,7 +60,7 @@ db.locations.hasMany(db.newss, {
     foreignKey: 'location_id',
     as: 'news'
 })
-db.newss.belongsTo(db.locatns, {
+db.newss.belongsTo(db.locations, {
     foreignKey: 'location_id',
     as: 'country'
 })
