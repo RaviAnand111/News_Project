@@ -29,3 +29,7 @@
 .brand-icon:hover{
 box-shadow: 0 5px 5px rgba(0,0,0,0.30), 0 10px 20px rgba(0,0,0,0.22);
 }
+
+.forgot{
+  text-decoration: none;
+}

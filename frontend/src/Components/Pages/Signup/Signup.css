@@ -1,0 +1,33 @@
+form{
+ margin: 5vh 0;
+}
+
+.footer{
+ visibility: hidden;
+}
+
+.brand-icon{
+ box-shadow: 0 5px 5px rgba(0,0,0,0.30), 0 5px 8px rgba(0,0,0,0.22);
+	border-radius: 47%;
+}
+
+.forgot{
+  text-decoration: none;
+  color: aqua;
+}
+
+.img{
+ height: 100%;
+}
+
+.radio{
+  margin-left: 10px;
+  font-size: 20px;
+  transform: scale(1.2);
+}
+
+.gender{
+  margin-left: 7px;
+  margin-right: 15px;
+  font-size: 20px;
+}
