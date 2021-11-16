@@ -29,17 +29,17 @@ const createUser = async (req, res) => {
   console.log("LOgging req.body");
   console.log(req.body);
 
-  //   const errors = validationResult(req);
-  //   if (!errors.isEmpty()) {
-  //     return res.status(400).json({ errors: errors.array() });
-  //   }
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
   try {
-    // let olduser = await User.findOne({ where: { email: req.body.email } });
-    // if (info.email == olduser.email) {
-    //   return res
-    //     .status(400)
-    //     .json({ error: "Sorry a user with this email already exists" });
-    // }
+    let olduser = await User.findOne({ where: { email: req.body.email } });
+    if (info.email == olduser.email) {
+      return res
+        .status(400)
+        .json({ error: "Sorry a user with this email already exists" });
+    }
 
     await User.create(info);
     const data = {
@@ -60,23 +60,25 @@ const createUser = async (req, res) => {
 const loginUser = async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
+    return res.status(400).json({ success: false, errors: errors.array() });
   }
   console.log(req.body);
   const { email, password } = req.body;
   try {
     let user = await User.findOne({ where: { email: req.body.email } });
     if (email != user.email) {
-      return res
-        .status(401)
-        .json({ error: "Please try to login with correct Credentials" });
+      return res.status(401).json({
+        success: false,
+        error: "Please try to login with correct Credentials",
+      });
     }
 
     const passwordCompare = await bcrypt.compare(password, user.password);
     if (!passwordCompare) {
-      return res
-        .status(401)
-        .json({ error: "Please try to login with correct Credentials" });
+      return res.status(401).json({
+        success: false,
+        error: "Please try to login with correct Credentials",
+      });
     }
     const data = {
       user: {
@@ -84,10 +86,10 @@ const loginUser = async (req, res) => {
       },
     };
     const authToken = jwt.sign(data, JWT_SECRET);
-    let userData = await User.findOne({ where: { email: req.body.email } });
-    res.json(userData);
-    // console.log(userData);
-    // res.json({ authtoken: authToken, userData: data.user.id });
+    // let userData = await User.findOne({ where: { email: req.body.email } });
+    // res.json(userData);
+    res.json({ success: true, userData: userData });
+    res.json(authToken);
   } catch (error) {
     console.error(error.message);
     res.status(500).send("Internal Server Error :(");

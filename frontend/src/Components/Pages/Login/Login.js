@@ -40,19 +40,34 @@ function Login() {
     }
   }
 
-  function postClick(e) {
+  const postClick = async (e) => {
     e.preventDefault();
-    console.log("inside postClick");
 
     const { email, password } = loginCredentials;
 
-    axios
-      .post("newsapi/login", loginCredentials)
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
+    // axios
+    //   .post("newsapi/login", loginCredentials)
+    //   .then((res) => console.log(res))
+    //   .catch((err) => console.log(err));
 
-    navigate("/NewsPage");
-  }
+    const response = await fetch("http://localhost:8080/newsapi/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email: email, password: password }),
+      // body: JSON.stringify(loginCredentials),
+    });
+
+    const json = await response.json();
+
+    if (json.success) {
+      navigate("/NewsPage", { replace: true });
+    } else {
+      alert(json.error);
+      navigate("/Login", { replace: true });
+    }
+  };
 
   return (
     <section className="">
@@ -66,7 +81,7 @@ function Login() {
             ></img>
           </div>
           <div className="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
-            <form>
+            <form onSubmit={postClick}>
               <div className="d-flex flex-row align-items-center justify-content-center justify-content-lg-start">
                 <p className="lead fw-normal mb-0 me-3">Sign in with</p>
                 <button
