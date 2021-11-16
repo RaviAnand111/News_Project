@@ -1,5 +1,6 @@
-const productController = require("../controllers/userController.js");
+const userController = require("../controllers/userController.js");
 const { body, validationResult } = require("express-validator");
+const checkLogin = require("../middleware/checkLogin")
 
 const router = require("express").Router();
 
@@ -15,7 +16,7 @@ router.post(
       max: 20,
     }),
   ],
-  productController.createUser
+  userController.createUser
 );
 
 // authenticate a user no login required
@@ -27,7 +28,10 @@ router.post(
     // body('password', 'Choose a password of minimum 8 characters').isLength({ min: 8}),
     // body('password', 'Choose a password of maximum 10 characters').isLength({ max: 20})
   ],
-  productController.loginUser
+  userController.loginUser
 );
+
+// geting user by login id password
+router.post('/getuser', checkLogin,  userController.getUser)
 
 module.exports = router;
