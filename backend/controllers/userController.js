@@ -1,87 +1,98 @@
-const { validationResult } = require('express-validator')
-const db = require('../models')
-const bcrypt = require('bcryptjs')
-var jwt = require('jsonwebtoken')
+const { validationResult } = require("express-validator");
+const db = require("../models");
+const bcrypt = require("bcryptjs");
+var jwt = require("jsonwebtoken");
 
+const JWT_SECRET = "Welcometonewsapplication";
 
-const JWT_SECRET = "Welcometonewsapplication"
-
-const User = db.users
+const User = db.users;
 // const Review = db.reviews
-
 
 // create a user
 const createUser = async (req, res) => {
-    const salt = await bcrypt.genSalt(10)
-    const secPass = await bcrypt.hash(req.body.password, salt)
-    console.log(secPass)
+  const salt = await bcrypt.genSalt(10);
+  const secPass = await bcrypt.hash(req.body.password, salt);
+  console.log(secPass);
 
-    let info = {
-        email: req.body.email,
-        password: secPass,
-        f_name: req.body.f_name,
-        l_name: req.body.l_name,
-        dob: req.body.dob,
-        gender: req.body.gender,
-        phone: req.body.phone,
-        address: req.body.address
-    }
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() })
-    }
-    try {
-        let olduser = await User.findOne({ where: { email: info.email } });
-        if (info.email == olduser.email) {
-            return res.status(400).json({ error: "Sorry a user with this email already exists" })
-        }
-        await User.create(info)
-        const data = {
-            user: {
-                id: User.user_id
-            }
-        }
-        const authToken = jwt.sign(data, JWT_SECRET)
-        console.log(authToken)
-        res.json({ authToken })
-    } catch (error) {
-        console.error(error.message)
-        res.status(500).send("Internal Server Error :(")
-    }
-}
+  let info = {
+    email: req.body.email,
+    password: secPass,
+    f_name: req.body.fName,
+    l_name: req.body.lName,
+    dob: req.body.dob,
+    gender: req.body.gender,
+    phone: req.body.phone,
+    address: req.body.address,
+    admin_user_id: "admin",
+  };
+
+  console.log("LOgging req.body");
+  console.log(req.body);
+
+  //   const errors = validationResult(req);
+  //   if (!errors.isEmpty()) {
+  //     return res.status(400).json({ errors: errors.array() });
+  //   }
+  try {
+    // let olduser = await User.findOne({ where: { email: req.body.email } });
+    // if (info.email == olduser.email) {
+    //   return res
+    //     .status(400)
+    //     .json({ error: "Sorry a user with this email already exists" });
+    // }
+
+    await User.create(info);
+    const data = {
+      user: {
+        id: User.user_id,
+      },
+    };
+    const authToken = jwt.sign(data, JWT_SECRET);
+    res.status(200).send("User Created Successfully");
+    // res.json({ authToken });
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send(" User Already Exists :(");
+  }
+};
 
 // to login a user
 const loginUser = async (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() })
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+  console.log(req.body);
+  const { email, password } = req.body;
+  try {
+    let user = await User.findOne({ where: { email: req.body.email } });
+    if (email != user.email) {
+      return res
+        .status(401)
+        .json({ error: "Please try to login with correct Credentials" });
     }
 
-    const { email, password } = req.body
-    try {
-        let user = await User.findOne({ where: { email: req.body.email } })
-        if (email != user.email) {
-            return res.status(400).json({ error: "Please try to login with correct Credentials" })
-        }
-
-        const passwordCompare = await bcrypt.compare(password, user.password)
-        if (!passwordCompare) {
-            return res.status(400).json({ error: "Please try to login with correct Credentials" })
-        }
-        const data = {
-            user: {
-                id: User.user_id
-            }
-        }
-        const authToken = jwt.sign(data, JWT_SECRET)
-        console.log(authToken)
-        res.json({ authToken })
-
-    } catch (error) {
-        console.error(error.message)
-        res.status(500).send("Internal Server Error :(")
+    const passwordCompare = await bcrypt.compare(password, user.password);
+    if (!passwordCompare) {
+      return res
+        .status(401)
+        .json({ error: "Please try to login with correct Credentials" });
     }
-}
+    const data = {
+      user: {
+        id: User.user_id,
+      },
+    };
+    const authToken = jwt.sign(data, JWT_SECRET);
+    let userData = await User.findOne({ where: { email: req.body.email } });
+    res.json(userData);
+    // console.log(userData);
+    // res.json({ authtoken: authToken, userData: data.user.id });
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send("Internal Server Error :(");
+  }
+};
 
 // //get one product
 // const getOneProduct = async (req, res)=>{
@@ -116,11 +127,11 @@ const loginUser = async (req, res) => {
 // }
 
 module.exports = {
-    createUser,
-    loginUser
-    // getAllProducts,
-    // getOneProduct,
-    // updateProduct,
-    // deleteProduct,
-    // getPublishedProduct
-}
+  createUser,
+  loginUser,
+  // getAllProducts,
+  // getOneProduct,
+  // updateProduct,
+  // deleteProduct,
+  // getPublishedProduct
+};

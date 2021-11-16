@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faTwitter,
@@ -6,9 +7,53 @@ import {
   faFacebookF,
   faLinkedin,
 } from "@fortawesome/free-brands-svg-icons";
+import { useNavigate } from "react-router";
 import "./Login.css";
+import axios from "axios";
 
 function Login() {
+  const navigate = useNavigate();
+
+  const [loginCredentials, setLoginCredentials] = useState({
+    email: "",
+    password: "",
+  });
+
+  function handleChange(event) {
+    var newInput = event.target.value;
+    var inputName = event.target.name;
+
+    if (inputName == "email") {
+      setLoginCredentials((prevValue) => {
+        return {
+          email: newInput,
+          password: prevValue.password,
+        };
+      });
+    } else if (inputName == "password") {
+      setLoginCredentials((prevValue) => {
+        return {
+          email: prevValue.email,
+          password: newInput,
+        };
+      });
+    }
+  }
+
+  function postClick(e) {
+    e.preventDefault();
+    console.log("inside postClick");
+
+    const { email, password } = loginCredentials;
+
+    axios
+      .post("newsapi/login", loginCredentials)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+
+    navigate("/NewsPage");
+  }
+
   return (
     <section className="">
       <div className="container-fluid h-custom vh-100">
@@ -56,8 +101,10 @@ function Login() {
                   Email address
                 </label>
                 <input
+                  onChange={handleChange}
                   type="email"
                   id="form3Example3"
+                  name="email"
                   className="form-control form-control-lg"
                   placeholder="Enter a valid email address"
                 />
@@ -69,8 +116,10 @@ function Login() {
                   Password
                 </label>
                 <input
+                  onChange={handleChange}
                   type="password"
                   id="form3Example4"
+                  name="password"
                   className="form-control form-control-lg"
                   placeholder="Enter password"
                 />
@@ -96,6 +145,7 @@ function Login() {
 
               <div className="text-center text-lg-start mt-4 pt-2">
                 <button
+                  onClick={postClick}
                   type="button"
                   className="btn btn-primary btn-lg"
                   style={{ paddingLeft: 15, paddingRight: 15 }}

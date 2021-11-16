@@ -6,6 +6,7 @@ import {
   faFacebookF,
   faLinkedin,
 } from "@fortawesome/free-brands-svg-icons";
+import axios from "axios";
 import "./Signup.css";
 
 function Signup() {
@@ -155,7 +156,7 @@ function Signup() {
     }
   }
 
-  const postClick = async (e) => {
+  const postClick = (e) => {
     e.preventDefault();
 
     const {
@@ -170,8 +171,12 @@ function Signup() {
       address,
     } = personalInfo;
 
-    const response = await fetch("/");
+    axios
+      .post("/newsapi/createuser", personalInfo)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
   };
+
   return (
     <section className="">
       <div className="container-fluid h-custom vh-100">
@@ -238,20 +243,6 @@ function Signup() {
                   name="lastName"
                   className="form-control form-control-lg"
                   placeholder="Enter your Last Name"
-                />
-              </div>
-
-              <div className="form-outline mb-3">
-                <label className="form-label" htmlFor="form3Example4">
-                  User ID
-                </label>
-                <input
-                  onChange={handleChange}
-                  type="text"
-                  id="form3Example4"
-                  name="userId"
-                  className="form-control form-control-lg"
-                  placeholder="Enter your userid"
                 />
               </div>
 
@@ -397,6 +388,7 @@ function Signup() {
                   type="button"
                   className="btn btn-primary btn-lg"
                   style={{ paddingLeft: 15, paddingRight: 15 }}
+                  onClick={postClick}
                 >
                   Signup
                 </button>
