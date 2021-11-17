@@ -1,0 +1,15 @@
+.navbar{
+ height: 70px;
+}
+
+.nav-item{
+ color: black;
+}
+
+.user-icon{
+ margin-left: 85vw;
+}
+
+.navbar-brand{
+ font-weight: 700;
+}

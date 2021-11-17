@@ -1,6 +1,6 @@
 const userController = require("../controllers/userController.js");
 const { body, validationResult } = require("express-validator");
-const checkLogin = require("../middleware/checkLogin")
+const checkLogin = require("../middleware/checkLogin");
 
 const router = require("express").Router();
 
@@ -32,6 +32,6 @@ router.post(
 );
 
 // geting user by login id password
-router.post('/getuser', checkLogin,  userController.getUser)
+router.post("/getuser", checkLogin, userController.getUser);
 
 module.exports = router;

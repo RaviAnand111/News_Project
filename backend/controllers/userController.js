@@ -1,7 +1,7 @@
 const { validationResult } = require("express-validator");
 const db = require("../models");
 const bcrypt = require("bcryptjs");
-var jwt = require('jsonwebtoken');
+var jwt = require("jsonwebtoken");
 
 const JWT_SECRET = "Welcometonewsapplication";
 
@@ -13,7 +13,7 @@ const createUser = async (req, res) => {
   const salt = await bcrypt.genSalt(10);
   const secPass = await bcrypt.hash(req.body.password, salt);
   console.log(secPass);
-  
+
   let info = {
     email: req.body.email,
     password: secPass,
@@ -25,7 +25,7 @@ const createUser = async (req, res) => {
     address: req.body.address,
     admin_user_id: "admin",
   };
-  
+
   console.log("LOgging req.body");
 
   console.log(info);
@@ -49,7 +49,9 @@ const createUser = async (req, res) => {
       },
     };
     const authToken = jwt.sign(data, JWT_SECRET);
-    res.status(200).send({status: "User Created Successfully", authToken: authToken});
+    res
+      .status(200)
+      .send({ status: "User Created Successfully", authToken: authToken });
   } catch (error) {
     console.error(error.message);
     res.status(500).send(" User Already Exists :(");
@@ -88,7 +90,7 @@ const loginUser = async (req, res) => {
     const authToken = jwt.sign(data, JWT_SECRET);
     // let userData = await User.findOne({ where: { email: req.body.email } });
     // res.json(userData);
-    res.json({ success: true, authToken: authToken});
+    res.json({ success: true, authToken: authToken });
     // res.json(authToken);
   } catch (error) {
     console.error(error.message);
@@ -98,22 +100,20 @@ const loginUser = async (req, res) => {
 
 // get user by credentials
 const getUser = async (req, res) => {
-
   try {
     emailId = req.user.email;
-    const user = await User.findOne({ where: { email: emailId}})
-    res.send(user)
+    const user = await User.findOne({ where: { email: emailId } });
+    res.send(user);
   } catch (error) {
     console.error(error.message);
     res.status(500).send("Internal Server Error");
   }
-}
-
+};
 
 module.exports = {
   createUser,
   loginUser,
-  getUser
+  getUser,
   // getAllProducts,
   // getOneProduct,
   // updateProduct,

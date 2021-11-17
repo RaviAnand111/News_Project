@@ -1,10 +1,9 @@
 import React from "react";
-import { BrowserRouter as Router, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./HomeNavbar.css";
 
 function HomeNavbar() {
   return (
-    // <Router>
     <div>
       <nav className="navbar navbar-expand-lg navbar-dark">
         <Link className="navbar-brand" to="/">
@@ -26,7 +25,6 @@ function HomeNavbar() {
         </div>
       </nav>
     </div>
-    // </Router>
   );
 }
 

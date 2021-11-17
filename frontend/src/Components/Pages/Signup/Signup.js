@@ -8,8 +8,11 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 import axios from "axios";
 import "./Signup.css";
+import { useNavigate } from "react-router";
 
 function Signup() {
+  let navigate = useNavigate();
+
   const [personalInfo, setPersonalInfo] = useState({
     userID: "",
     email: "",
@@ -175,6 +178,8 @@ function Signup() {
       .post("/newsapi/createuser", personalInfo)
       .then((res) => console.log(res))
       .catch((err) => console.log(err));
+
+    navigate("/Login", { replace: true });
   };
 
   return (

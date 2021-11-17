@@ -1,145 +1,54 @@
-import React from "react";
+import React, { useState } from "react";
+import { BrowserRouter as Router, Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
+import "./Navbar.css";
+import UserDetail from "../UserDetail/UserDetail";
 
-const Navbar = () => {
+function Navbar() {
+  const [showModal, setShowModal] = useState(false);
+
   return (
     <div>
-      {/* <!-- Navbar --> */}
-      <nav Name="navbar navbar-expand-lg navbar-light bg-light">
-        {/* <!-- Container wrapper --> */}
-        <div className="container-fluid">
-          {/* <!-- Toggle button --> */}
-          <button
-            className="navbar-toggler"
-            type="button"
-            data-mdb-toggle="collapse"
-            data-mdb-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <i className="fas fa-bars"></i>
-          </button>
-
-          {/* <!-- Collapsible wrapper --> */}
-          <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            {/* <!-- Navbar brand --> */}
-            <a className="navbar-brand mt-2 mt-lg-0" href="#">
-              <img
-                src="https://mdbootstrap.com/img/logo/mdb-transaprent-noshadows.png"
-                height="15"
-                alt=""
-                loading="lazy"
-              />
-            </a>
-            {/* <!-- Left links --> */}
-            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-              <li className="nav-item">
-                <a className="nav-link" href="#">
-                  Dashboard
-                </a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link" href="#">
-                  Team
-                </a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link" href="#">
-                  Projects
-                </a>
-              </li>
-            </ul>
-            {/* <!-- Left links --> */}
+      <nav className="navbar navbar-expand-lg navbar-light bg-light">
+        <a className="navbar-brand" href="#">
+          WorldView
+        </a>
+        <button
+          className="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarNavAltMarkup"
+          aria-controls="navbarNavAltMarkup"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span className="navbar-toggler-icon"></span>
+        </button>
+        <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div className="navbar-nav">
+            <Link className="nav-item nav-link active" to="#">
+              Home <span className="sr-only">(current)</span>
+            </Link>
+            {/* <Link className="nav-item nav-link active" to="#">
+              <button type="button" class="btn btn-outline-dark">
+                Dark
+              </button>
+            </Link> */}
+            <div
+              className="user-icon me-5"
+              onClick={() => {
+                showModal ? setShowModal(false) : setShowModal(true);
+              }}
+            >
+              <FontAwesomeIcon icon={faUserCircle} size="2x" />
+            </div>
+            {showModal === true && <UserDetail show={true} />}
           </div>
-          {/* <!-- Collapsible wrapper --> */}
-
-          {/* <!-- Right elements --> */}
-          <div className="d-flex align-items-center">
-            {/* <!-- Icon --> */}
-            <a className="text-reset me-3" href="#">
-              <i className="fas fa-shopping-cart"></i>
-            </a>
-
-            {/* <!-- Notifications --> */}
-            <a
-              className="text-reset me-3 dropdown-toggle hidden-arrow"
-              href="#"
-              id="navbarDropdownMenuLink"
-              role="button"
-              data-mdb-toggle="dropdown"
-              aria-expanded="false"
-            >
-              <i className="fas fa-bell"></i>
-              <span className="badge rounded-pill badge-notification bg-danger">
-                1
-              </span>
-            </a>
-            <ul
-              className="dropdown-menu dropdown-menu-end"
-              aria-labelledby="navbarDropdownMenuLink"
-            >
-              <li>
-                <a className="dropdown-item" href="#">
-                  Some news
-                </a>
-              </li>
-              <li>
-                <a className="dropdown-item" href="#">
-                  Another news
-                </a>
-              </li>
-              <li>
-                <a className="dropdown-item" href="#">
-                  Something else here
-                </a>
-              </li>
-            </ul>
-
-            {/* <!-- Avatar --> */}
-            <a
-              className="dropdown-toggle d-flex align-items-center hidden-arrow"
-              href="#"
-              id="navbarDropdownMenuLink"
-              role="button"
-              data-mdb-toggle="dropdown"
-              aria-expanded="false"
-            >
-              <img
-                src="https://mdbootstrap.com/img/new/avatars/2.jpg"
-                className="rounded-circle"
-                height="25"
-                alt=""
-                loading="lazy"
-              />
-            </a>
-            <ul
-              className="dropdown-menu dropdown-menu-end"
-              aria-labelledby="navbarDropdownMenuLink"
-            >
-              <li>
-                <a className="dropdown-item" href="#">
-                  My profile
-                </a>
-              </li>
-              <li>
-                <a className="dropdown-item" href="#">
-                  Settings
-                </a>
-              </li>
-              <li>
-                <a className="dropdown-item" href="#">
-                  Logout
-                </a>
-              </li>
-            </ul>
-          </div>
-          {/* <!-- Right elements --> */}
         </div>
-        {/* <!-- Container wrapper --> */}
       </nav>
-      {/* <!-- Navbar --> */}
     </div>
   );
-};
+}
 
 export default Navbar;

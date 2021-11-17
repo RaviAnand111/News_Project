@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faTwitter,
@@ -9,7 +8,6 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 import { useNavigate } from "react-router";
 import "./Login.css";
-import axios from "axios";
 
 function Login() {
   const navigate = useNavigate();
@@ -45,23 +43,27 @@ function Login() {
 
     const { email, password } = loginCredentials;
 
-    // axios
-    //   .post("newsapi/login", loginCredentials)
-    //   .then((res) => console.log(res))
-    //   .catch((err) => console.log(err));
-
     const response = await fetch("http://localhost:8080/newsapi/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ email: email, password: password }),
-      // body: JSON.stringify(loginCredentials),
     });
 
     const json = await response.json();
-
     if (json.success) {
+      localStorage.setItem("token", json.authToken);
+
+      const userFetch = await fetch("http://localhost:8080/newsapi/getuser", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": json.authToken,
+        },
+      });
+
+      const userData = await userFetch.json();
       navigate("/NewsPage", { replace: true });
     } else {
       alert(json.error);
