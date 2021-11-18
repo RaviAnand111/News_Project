@@ -1,12 +1,12 @@
 module.exports = (sequelize, DataTypes) => {
     const News = sequelize.define("news", {
-        news_id: {
+        id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true
         },
         title: {
-            type: DataTypes.STRING(60),
+            type: DataTypes.STRING(500),
             allowNull: false
         },
         description: {
@@ -14,11 +14,11 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false
         },
         url: {
-            type: DataTypes.STRING(60),
+            type: DataTypes.STRING(500),
             allowNull: false
         },
         url_to_image: {
-            type: DataTypes.STRING(60),
+            type: DataTypes.STRING(500),
             allowNull: true
         },
         published_at: {

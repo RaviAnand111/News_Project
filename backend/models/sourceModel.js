@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         author: {
             type: DataTypes.STRING(20),
-            allowNull: true
+            allowNull: false
         }
     }, {
         freezeTableName: true,
