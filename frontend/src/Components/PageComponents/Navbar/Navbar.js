@@ -11,9 +11,9 @@ function Navbar() {
   return (
     <div>
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
-        <a className="navbar-brand" href="#">
-          WorldView
-        </a>
+        <Link className="navbar-brand" to="#">
+          <span className="brand">WorldView</span>
+        </Link>
         <button
           className="navbar-toggler"
           type="button"
@@ -30,21 +30,28 @@ function Navbar() {
             <Link className="nav-item nav-link active" to="#">
               Home <span className="sr-only">(current)</span>
             </Link>
-            {/* <Link className="nav-item nav-link active" to="#">
-              <button type="button" class="btn btn-outline-dark">
-                Dark
-              </button>
-            </Link> */}
-            <div
-              className="user-icon me-5"
-              onClick={() => {
-                showModal ? setShowModal(false) : setShowModal(true);
-              }}
-            >
-              <FontAwesomeIcon icon={faUserCircle} size="2x" />
-            </div>
-            {showModal === true && <UserDetail show={true} />}
+            <Link className="nav-item nav-link active" to="#">
+              Business <span className="sr-only">(current)</span>
+            </Link>
+            <Link className="nav-item nav-link active" to="#">
+              Sports <span className="sr-only">(current)</span>
+            </Link>
+            <Link className="nav-item nav-link active" to="#">
+              Politics <span className="sr-only">(current)</span>
+            </Link>
+            <Link className="nav-item nav-link active" to="#">
+              Entertainment <span className="sr-only">(current)</span>
+            </Link>
           </div>
+          <div
+            className="user-icon me-5"
+            onClick={() => {
+              showModal ? setShowModal(false) : setShowModal(true);
+            }}
+          >
+            <FontAwesomeIcon icon={faUserCircle} size="2x" />
+          </div>
+          {showModal === true && <UserDetail show={true} />}
         </div>
       </nav>
     </div>

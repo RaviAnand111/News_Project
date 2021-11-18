@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faTwitter,
@@ -7,10 +7,14 @@ import {
   faLinkedin,
 } from "@fortawesome/free-brands-svg-icons";
 import { useNavigate } from "react-router";
+import { ProfileContext } from "../../../Context/ProfileContext";
 import "./Login.css";
 
 function Login() {
   const navigate = useNavigate();
+
+  const [userProfile, setUserProfile] = useContext(ProfileContext);
+  console.log(userProfile);
 
   const [loginCredentials, setLoginCredentials] = useState({
     email: "",
@@ -41,6 +45,8 @@ function Login() {
   const postClick = async (e) => {
     e.preventDefault();
 
+    //fetch request to login
+
     const { email, password } = loginCredentials;
 
     const response = await fetch("http://localhost:8080/newsapi/login", {
@@ -52,6 +58,9 @@ function Login() {
     });
 
     const json = await response.json();
+
+    // if fetch is success: true then make a fetch request to /getuser route to get user data by sending authtoken in headers of request
+
     if (json.success) {
       localStorage.setItem("token", json.authToken);
 
@@ -64,6 +73,19 @@ function Login() {
       });
 
       const userData = await userFetch.json();
+
+      // after getting userdata in userData variable copy the value in userProfile context in context api ProfileContext by using setState function setUserProfile
+
+      setUserProfile((prevProfile) => ({
+        email: userData.email,
+        f_name: userData.f_name,
+        l_name: userData.l_name,
+        dob: userData.dob,
+        gender: userData.gender,
+        phone: userData.phone,
+        address: userData.address,
+      }));
+
       navigate("/NewsPage", { replace: true });
     } else {
       alert(json.error);
