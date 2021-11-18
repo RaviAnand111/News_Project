@@ -17,16 +17,14 @@ const createUser = async (req, res) => {
   let info = {
     email: req.body.email,
     password: secPass,
-    f_name: req.body.f_name,
-    l_name: req.body.l_name,
+    f_name: req.body.fName,
+    l_name: req.body.lName,
     dob: req.body.dob,
     gender: req.body.gender,
     phone: req.body.phone,
     address: req.body.address,
     admin_user_id: "admin",
   };
-
-  console.log("LOgging req.body");
 
   console.log(info);
 

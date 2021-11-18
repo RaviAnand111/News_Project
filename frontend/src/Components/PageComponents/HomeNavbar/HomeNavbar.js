@@ -7,7 +7,7 @@ function HomeNavbar() {
     <div>
       <nav className="navbar navbar-expand-lg navbar-dark">
         <Link className="navbar-brand" to="/">
-          Navbar
+          WorldView
         </Link>
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav">
