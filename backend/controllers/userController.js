@@ -17,8 +17,8 @@ const createUser = async (req, res) => {
   let info = {
     email: req.body.email,
     password: secPass,
-    f_name: req.body.fName,
-    l_name: req.body.lName,
+    f_name: req.body.f_name,
+    l_name: req.body.l_name,
     dob: req.body.dob,
     gender: req.body.gender,
     phone: req.body.phone,

@@ -17,8 +17,8 @@ function Signup() {
     userID: "",
     email: "",
     password: "",
-    fName: "",
-    lName: "",
+    f_name: "",
+    l_name: "",
     dob: "",
     gender: "",
     phone: "",
@@ -33,8 +33,8 @@ function Signup() {
     if (inputName == "firstName") {
       setPersonalInfo((prevValue) => {
         return {
-          fName: newInput,
-          lName: prevValue.lName,
+          f_name: newInput,
+          l_name: prevValue.l_name,
           userID: prevValue.userID,
           email: prevValue.email,
           password: prevValue.password,
@@ -47,8 +47,8 @@ function Signup() {
     } else if (inputName == "lastName") {
       setPersonalInfo((prevValue) => {
         return {
-          fName: prevValue.fName,
-          lName: newInput,
+          f_name: prevValue.f_name,
+          l_name: newInput,
           userID: prevValue.userID,
           email: prevValue.email,
           password: prevValue.password,
@@ -61,8 +61,8 @@ function Signup() {
     } else if (inputName == "userId") {
       setPersonalInfo((prevValue) => {
         return {
-          fName: prevValue.fName,
-          lName: prevValue.lName,
+          f_name: prevValue.f_name,
+          l_name: prevValue.l_name,
           userID: newInput,
           email: prevValue.email,
           password: prevValue.password,
@@ -75,8 +75,8 @@ function Signup() {
     } else if (inputName == "dob") {
       setPersonalInfo((prevValue) => {
         return {
-          fName: prevValue.fName,
-          lName: prevValue.lName,
+          f_name: prevValue.f_name,
+          l_name: prevValue.l_name,
           userID: prevValue.userID,
           email: prevValue.email,
           password: prevValue.password,
@@ -89,8 +89,8 @@ function Signup() {
     } else if (inputName == "gender") {
       setPersonalInfo((prevValue) => {
         return {
-          fName: prevValue.fName,
-          lName: prevValue.lName,
+          f_name: prevValue.f_name,
+          l_name: prevValue.l_name,
           userID: prevValue.userID,
           email: prevValue.email,
           password: prevValue.password,
@@ -103,8 +103,8 @@ function Signup() {
     } else if (inputName == "phone") {
       setPersonalInfo((prevValue) => {
         return {
-          fName: prevValue.fName,
-          lName: prevValue.lName,
+          f_name: prevValue.f_name,
+          l_name: prevValue.l_name,
           userID: prevValue.userID,
           email: prevValue.email,
           password: prevValue.password,
@@ -117,8 +117,8 @@ function Signup() {
     } else if (inputName == "email") {
       setPersonalInfo((prevValue) => {
         return {
-          fName: prevValue.fName,
-          lName: prevValue.lName,
+          f_name: prevValue.f_name,
+          l_name: prevValue.l_name,
           userID: prevValue.userID,
           email: newInput,
           password: prevValue.password,
@@ -131,8 +131,8 @@ function Signup() {
     } else if (inputName == "password") {
       setPersonalInfo((prevValue) => {
         return {
-          fName: prevValue.fName,
-          lName: prevValue.lName,
+          f_name: prevValue.f_name,
+          l_name: prevValue.l_name,
           userID: prevValue.userID,
           email: prevValue.email,
           password: newInput,
@@ -145,8 +145,8 @@ function Signup() {
     } else if (inputName == "address") {
       setPersonalInfo((prevValue) => {
         return {
-          fName: prevValue.fName,
-          lName: prevValue.lName,
+          f_name: prevValue.f_name,
+          l_name: prevValue.l_name,
           userID: prevValue.userID,
           email: prevValue.email,
           password: prevValue.password,
@@ -166,8 +166,8 @@ function Signup() {
       userID,
       email,
       password,
-      fName,
-      lName,
+      f_name,
+      l_name,
       dob,
       gender,
       phone,
