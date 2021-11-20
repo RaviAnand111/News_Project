@@ -31,7 +31,12 @@ router.post(
   userController.loginUser
 );
 
+
 // geting user by login id password
 router.post("/getuser", checkLogin, userController.getUser);
 
+// fetch news login required
+router.post(
+  "/fetchnews/:category", checkLogin, userController.getNews
+);
 module.exports = router;

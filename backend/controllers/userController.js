@@ -1,4 +1,6 @@
 const { validationResult } = require("express-validator");
+const sequelize = require('sequelize')
+const { QueryTypes } = require('sequelize')
 const db = require("../models");
 const bcrypt = require("bcryptjs");
 var jwt = require("jsonwebtoken");
@@ -6,6 +8,10 @@ var jwt = require("jsonwebtoken");
 const JWT_SECRET = "Welcometonewsapplication";
 
 const User = db.users;
+const News = db.newss;
+const Location = db.locations;
+const Category = db.categories;
+const Source = db.sources;
 // const Review = db.reviews
 
 // create a user
@@ -108,10 +114,30 @@ const getUser = async (req, res) => {
   }
 };
 
+// get news if login
+const getNews = async (req, res) => {
+  try {
+    let category = req.params.category
+    let news = await db.sequelize.query(
+      // 'SELECT u.f_name, u.l_name, a.password FROM user u, admin a WHERE u.admin_user_id=a.user_id and u.f_name = :category',
+      'select n.id, n.title, n.description, n.url, n.image_to_url, n.published_at, s.name, s.author, l.city, l.country from news n, category ca, location l, source s where n.category_id = ca.category_id and n.location_id = l.location_id and n.source_id = s.source_id and ca.name = :category order by n.published_at desc;',
+      {
+        replacements: { category: category },
+        type: QueryTypes.SELECT
+      }
+    );
+    res.status(200).send(news)
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send("Internal Server Error");
+  }
+};
+
 module.exports = {
   createUser,
   loginUser,
   getUser,
+  getNews
   // getAllProducts,
   // getOneProduct,
   // updateProduct,

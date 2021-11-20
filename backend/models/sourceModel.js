@@ -3,7 +3,8 @@ module.exports = (sequelize, DataTypes) => {
     const Source = sequelize.define("source", {
         source_id: {
             type: DataTypes.INTEGER,
-            primaryKey: true
+            primaryKey: true,
+            autoIncrement: true
         },
         name: {
             type: DataTypes.STRING(20),
