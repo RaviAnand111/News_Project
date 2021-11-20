@@ -1,6 +1,7 @@
 const userController = require("../controllers/userController.js");
 const { body, validationResult } = require("express-validator");
 const checkLogin = require("../middleware/checkLogin");
+const checkAdmin = require("../middleware/checkAdmin.js");
 
 const router = require("express").Router();
 
@@ -31,12 +32,37 @@ router.post(
   userController.loginUser
 );
 
-
 // geting user by login id password
 router.post("/getuser", checkLogin, userController.getUser);
 
-// fetch news login required
+// fetch news user login required
 router.post(
   "/fetchnews/:category", checkLogin, userController.getNews
 );
+
+
+
+
+
+
+
+// authenticate an admin no login required
+router.post(
+  "/adminlogin",
+  [
+    body("user_id", "Enter a valid email").exists(),
+    body("password", "Password cannot be blank").exists(),
+    // body('password', 'Choose a password of minimum 8 characters').isLength({ min: 8}),
+    // body('password', 'Choose a password of maximum 10 characters').isLength({ max: 20})
+  ],
+  userController.loginAdmin
+);
+
+// geting all the user details if admin is logged in
+router.post("/getallusers", checkAdmin, userController.getAllUsers);
+
+// adding a news if admin is logged in
+router.post("/addnews", checkAdmin, userController.addNews);
+
+
 module.exports = router;
