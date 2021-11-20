@@ -47,6 +47,15 @@ db.users.belongsTo(db.admins, {
     as: 'admin'
 })
 
+db.admins.hasMany(db.newss, {
+    foreignKey: 'admin_user_id',
+    as: 'news'
+})
+db.newss.belongsTo(db.admins, {
+    foreignKey: 'admin_user_id',
+    as: 'admin'
+})
+
 db.categories.hasMany(db.newss, {
     foreignKey: 'category_id',
     as: 'news'
