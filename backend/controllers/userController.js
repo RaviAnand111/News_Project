@@ -32,7 +32,6 @@ const createUser = async (req, res) => {
     admin_user_id: "admin",
   };
 
-
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
@@ -136,10 +135,6 @@ const loginAdmin = async (req, res) => {
   if (!errors.isEmpty()) {
     return res.status(400).json({ success: false, errors: errors.array() });
   }
-// <<<<<<< main
-// // =======
-// //   console.log(req.body);
-// >>>>>>> main
   const { user_id, password } = req.body;
   try {
     let admin = await Admin.findOne({ where: { user_id: req.body.user_id } });
@@ -192,39 +187,23 @@ const addNews = async (req, res) => {
   try {
     let location = {
       country: req.body.country,
-// <<<<<<< main
-//       city: req.body.city
-//     }
-//     await Location.create(location);
-//     let loc = await Location.findOne({ where: { country: req.body.country, city: req.body.city } })
-//     let loc_id = await loc.location_id
+      city: req.body.city,
+    };
+    await Location.create(location);
+    let loc = await Location.findOne({
+      where: { country: req.body.country, city: req.body.city },
+    });
+    let loc_id = await loc.location_id;
 
-//     let source = {
-//       name: req.body.name,
-//       author: req.body.author
-//     }
-//     await Source.create(source);
-//     let sou = await Source.findOne({ where: { name: req.body.name, author: req.body.author } })
-//     let sou_id = await sou.source_id
-// =======
-//       city: req.body.city,
-//     };
-//     await Location.create(location);
-//     let loc = await Location.findOne({
-//       where: { country: req.body.country, city: req.body.city },
-//     });
-//     let loc_id = await loc.location_id;
-
-//     let source = {
-//       name: req.body.name,
-//       author: req.body.author,
-//     };
-//     await Source.create(source);
-//     let sou = await Source.findOne({
-//       where: { name: req.body.name, author: req.body.author },
-//     });
-//     let sou_id = await sou.source_id;
-// >>>>>>> main
+    let source = {
+      name: req.body.name,
+      author: req.body.author,
+    };
+    await Source.create(source);
+    let sou = await Source.findOne({
+      where: { name: req.body.name, author: req.body.author },
+    });
+    let sou_id = await sou.source_id;
 
     let news = {
       title: req.body.title,
@@ -239,14 +218,6 @@ const addNews = async (req, res) => {
     };
     await News.create(news);
     res.status(200).send({ status: "News added Successfully" });
-// <<<<<<< main
-
-//     const errors = validationResult(req);
-//     if (!errors.isEmpty()) {
-//       return res.status(400).json({ errors: errors.array() });
-//     }
-=======
-// >>>>>>> main
 
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -260,11 +231,11 @@ const addNews = async (req, res) => {
 
 // delete an existing news if admin is logged in
 const deleteNews = async (req, res) => {
-  const news_id = req.body.id
+  const news_id = req.body.id;
   try {
-    let news = await News.findOne({ where: { id: news_id } })
-    const source_id = await news.source_id
-    const location_id = await news.location_id
+    let news = await News.findOne({ where: { id: news_id } });
+    const source_id = await news.source_id;
+    const location_id = await news.location_id;
 
     await News.destroy({ where: { id: news_id } });
     await Source.destroy({ where: { source_id: source_id } });
@@ -283,15 +254,6 @@ module.exports = {
   getNews,
   loginAdmin,
   getAllUsers,
-// <<<<<<< main
-//   deleteNews,
-//   addNews
-// =======
-//   addNews,
-  // getAllProducts,
-  // getOneProduct,
-  // updateProduct,
-  // deleteProduct,
-  // getPublishedProduct
-// >>>>>>> main
+  deleteNews,
+  addNews,
 };
