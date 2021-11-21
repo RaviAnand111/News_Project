@@ -21,6 +21,11 @@ function HomeNavbar() {
                 Signup
               </Link>
             </li>
+            <li className="nav-item ">
+              <Link className="nav-link" to={"/AdminLogin"}>
+                Admin Login
+              </Link>
+            </li>
           </ul>
         </div>
       </nav>

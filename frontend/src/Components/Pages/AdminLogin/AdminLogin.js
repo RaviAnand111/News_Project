@@ -8,15 +8,14 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 import { useNavigate } from "react-router";
 import { ProfileContext } from "../../../Context/ProfileContext";
-import "./Login.css";
 
 function Login() {
   const navigate = useNavigate();
 
   const [userProfile, setUserProfile] = useContext(ProfileContext);
 
-  const [loginCredentials, setLoginCredentials] = useState({
-    email: "",
+  const [adminCredentials, setAdminCredentials] = useState({
+    user_id: "",
     password: "",
   });
 
@@ -24,17 +23,17 @@ function Login() {
     var newInput = event.target.value;
     var inputName = event.target.name;
 
-    if (inputName === "email") {
-      setLoginCredentials((prevValue) => {
+    if (inputName === "user_id") {
+      setAdminCredentials((prevValue) => {
         return {
-          email: newInput,
+          user_id: newInput,
           password: prevValue.password,
         };
       });
     } else if (inputName === "password") {
-      setLoginCredentials((prevValue) => {
+      setAdminCredentials((prevValue) => {
         return {
-          email: prevValue.email,
+          user_id: prevValue.user_id,
           password: newInput,
         };
       });
@@ -46,14 +45,14 @@ function Login() {
 
     //fetch request to login
 
-    const { email, password } = loginCredentials;
+    const { user_id, password } = adminCredentials;
 
-    const response = await fetch("http://localhost:8080/newsapi/login", {
+    const response = await fetch("http://localhost:8080/newsapi/adminlogin", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ email: email, password: password }),
+      body: JSON.stringify({ user_id: user_id, password: password }),
     });
 
     const json = await response.json();
@@ -61,34 +60,11 @@ function Login() {
     // if fetch is success: true then make a fetch request to /getuser route to get user data by sending authtoken in headers of request
 
     if (json.success) {
-      localStorage.setItem("token", json.authToken);
-
-      const userFetch = await fetch("http://localhost:8080/newsapi/getuser", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "auth-token": json.authToken,
-        },
-      });
-
-      const userData = await userFetch.json();
-
-      // after getting userdata in userData variable copy the value in userProfile context in context api ProfileContext by using setState function setUserProfile
-
-      setUserProfile((prevProfile) => ({
-        email: userData.email,
-        f_name: userData.f_name,
-        l_name: userData.l_name,
-        dob: userData.dob,
-        gender: userData.gender,
-        phone: userData.phone,
-        address: userData.address,
-      }));
-
-      navigate("/NewsPage", { replace: true });
+      localStorage.setItem("admintoken", json.authToken);
+      navigate("/AdminNewsPage", { replace: true });
     } else {
       alert(json.error);
-      navigate("/Login", { replace: true });
+      navigate("/", { replace: true });
     }
   };
 
@@ -106,7 +82,7 @@ function Login() {
           <div className="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
             <form onSubmit={postClick}>
               <div className="d-flex flex-row align-items-center justify-content-center justify-content-lg-start">
-                <p className="lead fw-normal mb-0 me-3">Sign in with</p>
+                <p className="lead fw-normal mb-0 me-3">Admin Sign in with</p>
                 <button
                   type="button"
                   className="btn btn-primary btn-floating mx-1  brand-icon"
@@ -133,18 +109,18 @@ function Login() {
                 <p className="text-center fw-bold mx-3 mb-0">Or</p>
               </div>
 
-              {/* <!-- Email input --> */}
+              {/* <!-- user_id input --> */}
               <div className="form-outline mb-4">
                 <label className="form-label" htmlFor="form3Example3">
-                  Email address
+                  User ID
                 </label>
                 <input
                   onChange={handleChange}
-                  type="email"
+                  type="user_id"
                   id="form3Example3"
-                  name="email"
+                  name="user_id"
                   className="form-control form-control-lg"
-                  placeholder="Enter a valid email address"
+                  placeholder="Enter a valid user_id address"
                 />
               </div>
 
@@ -163,8 +139,7 @@ function Login() {
                 />
               </div>
 
-              <div className="d-flex justify-content-between align-items-center">
-                {/* <!-- Checkbox --> */}
+              {/* <div className="d-flex justify-content-between align-items-center">
                 <div className="form-check mb-0">
                   <input
                     className="form-check-input me-2"
@@ -172,14 +147,11 @@ function Login() {
                     value=""
                     id="form2Example3"
                   />
-                  <label className="form-check-label" htmlFor="form2Example3">
-                    Remember me
-                  </label>
                 </div>
                 <a href="#!" className="text-body forgot">
                   Forgot password?
                 </a>
-              </div>
+              </div> */}
 
               <div className="text-center text-lg-start mt-4 pt-2">
                 <button
@@ -190,12 +162,6 @@ function Login() {
                 >
                   Login
                 </button>
-                <p className="small fw-bold mt-2 pt-1 mb-0">
-                  Don't have an account?
-                  <a href="#!" className="link-danger">
-                    Register
-                  </a>
-                </p>
               </div>
             </form>
           </div>

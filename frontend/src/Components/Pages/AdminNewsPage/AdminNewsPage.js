@@ -7,28 +7,23 @@ const NewsPage = () => {
   let navigate = useNavigate();
   const [news, setNews] = useState([]);
 
-  const [category, setCategory] = useState("health");
+  const [category, setCategory] = useState("general");
+  console.log(category);
 
   const fetchnews = async () => {
-    try {
-      const response = await fetch(
-        `http://localhost:8080/newsapi/fetchnews/${category}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "auth-token": localStorage.getItem("token"),
-          },
-        }
-      );
+    const response = await fetch(
+      `http://localhost:8080/newsapi/fetchnews/${category}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": localStorage.getItem("admintoken"),
+        },
+      }
+    );
 
-      const json = await response.json();
-      console.log(json);
-      setNews(json);
-    } catch (error) {
-      console.log(error);
-      navigate("/");
-    }
+    const json = await response.json();
+    setNews(json);
   };
 
   useEffect(() => {
@@ -37,7 +32,7 @@ const NewsPage = () => {
 
   return (
     <div>
-      <NewsNavbar setCategory={setCategory} admin={false} />
+      <NewsNavbar setCategory={setCategory} admin={true} />
       <div className="container">
         <div className="row">
           {news.map((element) => {
