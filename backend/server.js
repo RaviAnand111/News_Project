@@ -17,7 +17,7 @@ const router = require("./routes/userRouter.js");
 app.use("/newsapi/", router);
 
 app.get("/", (req, res) => {
-  res.json({ message: "hello world" });
+  res.json({ message: "Spread Happiness :)" });
 });
 
 const PORT = process.env.PORT || 8080;

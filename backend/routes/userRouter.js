@@ -1,5 +1,5 @@
 const userController = require("../controllers/userController.js");
-const { body, validationResult } = require("express-validator");
+const { body } = require("express-validator");
 const checkLogin = require("../middleware/checkLogin");
 const checkAdmin = require("../middleware/checkAdmin.js");
 
@@ -26,8 +26,6 @@ router.post(
   [
     body("email", "Enter a valid email").isEmail(),
     body("password", "Password cannot be blank").exists(),
-    // body('password', 'Choose a password of minimum 8 characters').isLength({ min: 8}),
-    // body('password', 'Choose a password of maximum 10 characters').isLength({ max: 20})
   ],
   userController.loginUser
 );
@@ -52,8 +50,6 @@ router.post(
   [
     body("user_id", "Enter a valid email").exists(),
     body("password", "Password cannot be blank").exists(),
-    // body('password', 'Choose a password of minimum 8 characters').isLength({ min: 8}),
-    // body('password', 'Choose a password of maximum 10 characters').isLength({ max: 20})
   ],
   userController.loginAdmin
 );
@@ -63,6 +59,9 @@ router.post("/getallusers", checkAdmin, userController.getAllUsers);
 
 // adding a news if admin is logged in
 router.post("/addnews", checkAdmin, userController.addNews);
+
+// delete a news if admin is logged in
+router.delete("/deletenews", checkAdmin, userController.deleteNews);
 
 
 module.exports = router;
