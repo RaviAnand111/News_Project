@@ -7,7 +7,7 @@ const NewsPage = () => {
   let navigate = useNavigate();
   const [news, setNews] = useState([]);
 
-  const [category, setCategory] = useState("health");
+  const [category, setCategory] = useState("general");
 
   const fetchnews = async () => {
     try {
@@ -23,7 +23,6 @@ const NewsPage = () => {
       );
 
       const json = await response.json();
-      console.log(json);
       setNews(json);
     } catch (error) {
       console.log(error);
@@ -33,7 +32,7 @@ const NewsPage = () => {
 
   useEffect(() => {
     fetchnews();
-  }, []);
+  }, [category]);
 
   return (
     <div>

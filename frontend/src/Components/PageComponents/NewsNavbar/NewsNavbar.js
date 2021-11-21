@@ -130,7 +130,7 @@ function NewsNavbar(props) {
             <UserDetail
               showModal={showModal}
               setShowModal={setShowModal}
-              admin={true}
+              admin={props.admin}
             />
           )}
         </div>

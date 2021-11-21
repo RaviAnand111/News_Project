@@ -28,7 +28,7 @@ const NewsPage = () => {
 
   useEffect(() => {
     fetchnews();
-  }, []);
+  }, [category]);
 
   return (
     <div>
