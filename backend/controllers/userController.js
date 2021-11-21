@@ -19,7 +19,6 @@ const Source = db.sources;
 const createUser = async (req, res) => {
   const salt = await bcrypt.genSalt(10);
   const secPass = await bcrypt.hash(req.body.password, salt);
-  console.log(secPass);
 
   let info = {
     email: req.body.email,
@@ -33,7 +32,6 @@ const createUser = async (req, res) => {
     admin_user_id: "admin",
   };
 
-  console.log(info);
 
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -69,7 +67,6 @@ const loginUser = async (req, res) => {
   if (!errors.isEmpty()) {
     return res.status(400).json({ success: false, errors: errors.array() });
   }
-  console.log(req.body);
   const { email, password } = req.body;
   try {
     let user = await User.findOne({ where: { email: req.body.email } });
@@ -146,8 +143,7 @@ const loginAdmin = async (req, res) => {
   if (!errors.isEmpty()) {
     return res.status(400).json({ success: false, errors: errors.array() });
   }
-  console.log(req.body);
-  const { user_id , password } = req.body;
+  const { user_id, password } = req.body;
   try {
     let admin = await Admin.findOne({ where: { user_id: req.body.user_id } });
     if (!admin) {
@@ -197,44 +193,62 @@ const getAllUsers = async (req, res) => {
 const addNews = async (req, res) => {
   let now = new Date();
   try {
-  let location = {
-    country: req.body.country,
-    city: req.body.city
-  }
-  await Location.create(location);
-  let loc = await Location.findOne({ where: { country: req.body.country, city: req.body.city } })
-  let loc_id = await loc.location_id
+    let location = {
+      country: req.body.country,
+      city: req.body.city
+    }
+    await Location.create(location);
+    let loc = await Location.findOne({ where: { country: req.body.country, city: req.body.city } })
+    let loc_id = await loc.location_id
 
-  let source = {
-    name: req.body.name,
-    author: req.body.author
-  }
-  await Source.create(source);
-  let sou = await Source.findOne({ where: { name: req.body.name, author: req.body.author } })
-  let sou_id = await sou.source_id
+    let source = {
+      name: req.body.name,
+      author: req.body.author
+    }
+    await Source.create(source);
+    let sou = await Source.findOne({ where: { name: req.body.name, author: req.body.author } })
+    let sou_id = await sou.source_id
 
-  let news = {
-    title: req.body.title,
-    description: req.body.description,
-    url: req.body.url,
-    url_to_image: req.body.url_to_image,
-    published_at: now,
-    admin_user_id: "admin",
-    category_id: req.body.category_id,
-    location_id: await loc_id,
-    source_id: await sou_id,
-  };
-  await News.create(news);
-  res.status(200).send({ status: "News added Successfully" });
+    let news = {
+      title: req.body.title,
+      description: req.body.description,
+      url: req.body.url,
+      url_to_image: req.body.url_to_image,
+      published_at: now,
+      admin_user_id: "admin",
+      category_id: req.body.category_id,
+      location_id: await loc_id,
+      source_id: await sou_id,
+    };
+    await News.create(news);
+    res.status(200).send({ status: "News added Successfully" });
 
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
-  }
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
 
   } catch (error) {
     console.error(error.message);
     res.status(500).send(" User Already Exists :(");
+  }
+};
+
+// delete an existing news if admin is logged in
+const deleteNews = async (req, res) => {
+  const news_id = req.body.id
+  try {
+    let news = await News.findOne({ where: { id: news_id } })
+    const source_id = await news.source_id
+    const location_id = await news.location_id
+
+    await News.destroy({ where: { id: news_id } });
+    await Source.destroy({ where: { source_id: source_id } });
+    await Location.destroy({ where: { location_id: location_id } });
+    res.send({ message: "Deleted!" });
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send("Internal Server Error");
   }
 };
 
@@ -245,10 +259,6 @@ module.exports = {
   getNews,
   loginAdmin,
   getAllUsers,
+  deleteNews,
   addNews
-  // getAllProducts,
-  // getOneProduct,
-  // updateProduct,
-  // deleteProduct,
-  // getPublishedProduct
 };
