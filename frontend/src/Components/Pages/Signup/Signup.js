@@ -23,7 +23,6 @@ function Signup() {
     gender: "",
     phone: "",
     address: "",
-    admin_user_id: "admin",
   });
 
   function handleChange(event) {

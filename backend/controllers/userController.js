@@ -1,6 +1,6 @@
 const { validationResult } = require("express-validator");
-const sequelize = require('sequelize')
-const { QueryTypes } = require('sequelize')
+const sequelize = require("sequelize");
+const { QueryTypes } = require("sequelize");
 const db = require("../models");
 const bcrypt = require("bcryptjs");
 var jwt = require("jsonwebtoken");
@@ -115,27 +115,20 @@ const getUser = async (req, res) => {
 // get news if login
 const getNews = async (req, res) => {
   try {
-    let category = req.params.category
+    let category = req.params.category;
     let news = await db.sequelize.query(
-      'select n.id, n.title, n.description, n.url, n.url_to_image, n.published_at, s.name, s.author, l.city, l.country from news n, category ca, location l, source s where n.category_id = ca.category_id and n.location_id = l.location_id and n.source_id = s.source_id and ca.name = :category order by n.published_at desc;',
+      "select n.id, n.title, n.description, n.url, n.url_to_image, n.published_at, s.name, s.author, l.city, l.country from news n, category ca, location l, source s where n.category_id = ca.category_id and n.location_id = l.location_id and n.source_id = s.source_id and ca.name = :category order by n.published_at desc;",
       {
         replacements: { category: category },
-        type: QueryTypes.SELECT
+        type: QueryTypes.SELECT,
       }
     );
-    res.status(200).send(news)
+    res.status(200).send(news);
   } catch (error) {
     console.error(error.message);
     res.status(500).send("Internal Server Error");
   }
 };
-
-
-
-
-
-
-
 
 // to login an admin
 const loginAdmin = async (req, res) => {
@@ -143,6 +136,10 @@ const loginAdmin = async (req, res) => {
   if (!errors.isEmpty()) {
     return res.status(400).json({ success: false, errors: errors.array() });
   }
+// <<<<<<< main
+// // =======
+// //   console.log(req.body);
+// >>>>>>> main
   const { user_id, password } = req.body;
   try {
     let admin = await Admin.findOne({ where: { user_id: req.body.user_id } });
@@ -179,7 +176,7 @@ const getAllUsers = async (req, res) => {
     let users = await db.sequelize.query(
       'select u.f_name, u.l_name, u.email, u.gender, u.dob from user u where u.admin_user_id = "admin";',
       {
-        type: QueryTypes.SELECT
+        type: QueryTypes.SELECT,
       }
     );
     res.send(users);
@@ -195,19 +192,39 @@ const addNews = async (req, res) => {
   try {
     let location = {
       country: req.body.country,
-      city: req.body.city
-    }
-    await Location.create(location);
-    let loc = await Location.findOne({ where: { country: req.body.country, city: req.body.city } })
-    let loc_id = await loc.location_id
+// <<<<<<< main
+//       city: req.body.city
+//     }
+//     await Location.create(location);
+//     let loc = await Location.findOne({ where: { country: req.body.country, city: req.body.city } })
+//     let loc_id = await loc.location_id
 
-    let source = {
-      name: req.body.name,
-      author: req.body.author
-    }
-    await Source.create(source);
-    let sou = await Source.findOne({ where: { name: req.body.name, author: req.body.author } })
-    let sou_id = await sou.source_id
+//     let source = {
+//       name: req.body.name,
+//       author: req.body.author
+//     }
+//     await Source.create(source);
+//     let sou = await Source.findOne({ where: { name: req.body.name, author: req.body.author } })
+//     let sou_id = await sou.source_id
+// =======
+//       city: req.body.city,
+//     };
+//     await Location.create(location);
+//     let loc = await Location.findOne({
+//       where: { country: req.body.country, city: req.body.city },
+//     });
+//     let loc_id = await loc.location_id;
+
+//     let source = {
+//       name: req.body.name,
+//       author: req.body.author,
+//     };
+//     await Source.create(source);
+//     let sou = await Source.findOne({
+//       where: { name: req.body.name, author: req.body.author },
+//     });
+//     let sou_id = await sou.source_id;
+// >>>>>>> main
 
     let news = {
       title: req.body.title,
@@ -222,12 +239,19 @@ const addNews = async (req, res) => {
     };
     await News.create(news);
     res.status(200).send({ status: "News added Successfully" });
+// <<<<<<< main
+
+//     const errors = validationResult(req);
+//     if (!errors.isEmpty()) {
+//       return res.status(400).json({ errors: errors.array() });
+//     }
+=======
+// >>>>>>> main
 
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-
   } catch (error) {
     console.error(error.message);
     res.status(500).send(" User Already Exists :(");
@@ -259,6 +283,15 @@ module.exports = {
   getNews,
   loginAdmin,
   getAllUsers,
-  deleteNews,
-  addNews
+// <<<<<<< main
+//   deleteNews,
+//   addNews
+// =======
+//   addNews,
+  // getAllProducts,
+  // getOneProduct,
+  // updateProduct,
+  // deleteProduct,
+  // getPublishedProduct
+// >>>>>>> main
 };

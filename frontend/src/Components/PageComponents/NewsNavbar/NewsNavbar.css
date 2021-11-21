@@ -1,0 +1,43 @@
+.navbar{
+ height: 70px;
+ font-size: 18px;
+ margin-bottom: 50px;
+}
+
+.nav-item{
+ color: black;
+ margin: 0 15px;
+}
+
+.user-icon{
+ margin-left: 10%;
+}
+
+
+.add-icon{
+ /* margin-left: 30%; */
+ color: rgb(11, 240, 11);
+ margin-left: 15%;
+ cursor: pointer;
+} 
+
+.add-news{
+ margin: 10px 10px 10px 12px;
+ font-size: 26px;
+ font-weight: bold;
+ cursor: pointer; 
+}
+
+.navbar-brand{
+ font-weight: 700;
+ margin: 10px 0 10px 50px;
+}
+
+.brand{
+ font-size: 35px;
+ margin-right: 50px; 
+}
+
+.fa {
+    transform: translateY(-4%);
+}
