@@ -8,6 +8,7 @@ var jwt = require("jsonwebtoken");
 const JWT_SECRET = "Welcometonewsapplication";
 
 const User = db.users;
+const Admin = db.admins;
 const News = db.newss;
 const Location = db.locations;
 const Category = db.categories;
@@ -119,8 +120,7 @@ const getNews = async (req, res) => {
   try {
     let category = req.params.category
     let news = await db.sequelize.query(
-      // 'SELECT u.f_name, u.l_name, a.password FROM user u, admin a WHERE u.admin_user_id=a.user_id and u.f_name = :category',
-      'select n.id, n.title, n.description, n.url, n.image_to_url, n.published_at, s.name, s.author, l.city, l.country from news n, category ca, location l, source s where n.category_id = ca.category_id and n.location_id = l.location_id and n.source_id = s.source_id and ca.name = :category order by n.published_at desc;',
+      'select n.id, n.title, n.description, n.url, n.url_to_image, n.published_at, s.name, s.author, l.city, l.country from news n, category ca, location l, source s where n.category_id = ca.category_id and n.location_id = l.location_id and n.source_id = s.source_id and ca.name = :category order by n.published_at desc;',
       {
         replacements: { category: category },
         type: QueryTypes.SELECT
@@ -133,11 +133,119 @@ const getNews = async (req, res) => {
   }
 };
 
+
+
+
+
+
+
+
+// to login an admin
+const loginAdmin = async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ success: false, errors: errors.array() });
+  }
+  console.log(req.body);
+  const { user_id , password } = req.body;
+  try {
+    let admin = await Admin.findOne({ where: { user_id: req.body.user_id } });
+    if (!admin) {
+      return res.status(401).json({
+        success: false,
+        error: "Please try to login with correct Credentials",
+      });
+    }
+
+    const passwordCompare = await bcrypt.compare(password, admin.password);
+    if (!passwordCompare) {
+      return res.status(401).json({
+        success: false,
+        error: "Please try to login with correct Credentials",
+      });
+    }
+    const data = {
+      admin: {
+        user_id: admin.user_id,
+      },
+    };
+    const authToken = jwt.sign(data, JWT_SECRET);
+    res.json({ success: true, authToken: authToken });
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send("Internal Server Error :(");
+  }
+};
+
+// get all the users detail if admin is logged in
+const getAllUsers = async (req, res) => {
+  try {
+    let users = await db.sequelize.query(
+      'select u.f_name, u.l_name, u.email, u.gender, u.dob from user u where u.admin_user_id = "admin";',
+      {
+        type: QueryTypes.SELECT
+      }
+    );
+    res.send(users);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send("Internal Server Error");
+  }
+};
+
+// add a news
+const addNews = async (req, res) => {
+  let now = new Date();
+  try {
+  let location = {
+    country: req.body.country,
+    city: req.body.city
+  }
+  await Location.create(location);
+  let loc = await Location.findOne({ where: { country: req.body.country, city: req.body.city } })
+  let loc_id = await loc.location_id
+
+  let source = {
+    name: req.body.name,
+    author: req.body.author
+  }
+  await Source.create(source);
+  let sou = await Source.findOne({ where: { name: req.body.name, author: req.body.author } })
+  let sou_id = await sou.source_id
+
+  let news = {
+    title: req.body.title,
+    description: req.body.description,
+    url: req.body.url,
+    url_to_image: req.body.url_to_image,
+    published_at: now,
+    admin_user_id: "admin",
+    category_id: req.body.category_id,
+    location_id: await loc_id,
+    source_id: await sou_id,
+  };
+  await News.create(news);
+  res.status(200).send({ status: "News added Successfully" });
+
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send(" User Already Exists :(");
+  }
+};
+
 module.exports = {
   createUser,
   loginUser,
   getUser,
-  getNews
+  getNews,
+  loginAdmin,
+  getAllUsers,
+  addNews
   // getAllProducts,
   // getOneProduct,
   // updateProduct,
