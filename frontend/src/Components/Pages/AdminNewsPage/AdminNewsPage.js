@@ -38,6 +38,7 @@ const NewsPage = () => {
             return (
               <div className="col-md-4" key={element.url}>
                 <NewsTile
+                  admin={true}
                   id={element.id ? element.id : ""}
                   title={element.title ? element.title : ""}
                   description={element.description ? element.description : ""}

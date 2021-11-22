@@ -59,10 +59,15 @@ const NewsTile = (props) => {
               {new Date().toGMTString()}
             </small>
           </p>
-          <div className="trash-div" onClick={deletenews}>
-            <FontAwesomeIcon className="trash-icon" icon={faTrash} size="2x" />
-          </div>
-
+          {props.admin && (
+            <div className="trash-div" onClick={deletenews}>
+              <FontAwesomeIcon
+                className="trash-icon"
+                icon={faTrash}
+                size="2x"
+              />
+            </div>
+          )}
           <a
             rel="noreferrer"
             href={newsUrl}
