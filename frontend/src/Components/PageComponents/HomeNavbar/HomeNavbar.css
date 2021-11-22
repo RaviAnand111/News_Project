@@ -1,9 +1,23 @@
+body{
+ font-family: 'Lato', sans-serif;
+}
+
 .navbar{
  background-color: #030A3A;
 }
 
 #navbarNav{
- margin: 0 50vw;
+ margin-left: 25%;
+ margin-right: 0;
+}
+
+@media only screen and (min-width: 1463px) {
+
+ #navbarNav{
+ margin-left: 60%;
+ margin-right: 0;
+}
+ 
 }
 
 /* ont-family: 'Lato', sans-serif; */

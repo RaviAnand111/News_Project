@@ -204,14 +204,7 @@ const AddNews = (props) => {
         <Modal.Body style={{ height: 1100 }}>
           <section className="">
             <div className="container-fluid h-custom vh-100">
-              <div className="row d-flex justify-content-center align-items-center h-100">
-                {/* <div className="col-md-9 col-lg-6 col-xl-5">
-                  <img
-                    src="https://mdbootstrap.com/img/Photos/new-templates/bootstrap-login-form/draw2.png"
-                    className="img-fluid img"
-                    alt="Sample image"
-                  ></img>
-                </div> */}
+              <div className="row d-flex justify-content-center align-items-center h-10">
                 <div
                   className="col-md col-lg col-xl-4 offset-xl-1 personal-info"
                   style={{ width: "550px", marginLeft: "0" }}
