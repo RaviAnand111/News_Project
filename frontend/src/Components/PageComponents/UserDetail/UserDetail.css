@@ -2,3 +2,7 @@ h2{
  text-align: center;
  margin: 20%; 
 }
+
+div.modal-body{
+ height: 450px;
+}

@@ -8,7 +8,6 @@ const NewsPage = () => {
   const [news, setNews] = useState([]);
 
   const [category, setCategory] = useState("general");
-  console.log(category);
 
   const fetchnews = async () => {
     const response = await fetch(
@@ -39,6 +38,7 @@ const NewsPage = () => {
             return (
               <div className="col-md-4" key={element.url}>
                 <NewsTile
+                  id={element.id ? element.id : ""}
                   title={element.title ? element.title : ""}
                   description={element.description ? element.description : ""}
                   imageUrl={element.url_to_image}

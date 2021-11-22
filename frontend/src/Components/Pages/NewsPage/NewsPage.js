@@ -24,6 +24,7 @@ const NewsPage = () => {
 
       const json = await response.json();
       setNews(json);
+      console.log(json);
     } catch (error) {
       console.log(error);
       navigate("/");
@@ -43,6 +44,7 @@ const NewsPage = () => {
             return (
               <div className="col-md-4" key={element.url}>
                 <NewsTile
+                  id={element.id ? element.id : ""}
                   title={element.title ? element.title : ""}
                   description={element.description ? element.description : ""}
                   imageUrl={element.url_to_image}

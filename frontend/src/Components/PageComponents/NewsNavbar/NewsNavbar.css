@@ -9,15 +9,18 @@
  margin: 0 15px;
 }
 
-.user-icon{
- margin-left: 10%;
+.admin-icon{
+ margin-left: 5rem;
 }
 
+.user-icon{
+ margin-left: 30rem;  
+}
 
 .add-icon{
  /* margin-left: 30%; */
  color: rgb(11, 240, 11);
- margin-left: 15%;
+ margin-left: 12%;
  cursor: pointer;
 } 
 

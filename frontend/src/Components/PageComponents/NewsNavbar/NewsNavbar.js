@@ -115,15 +115,23 @@ function NewsNavbar(props) {
             </p>
           )}
           <div
-            className="user-icon me-5"
+            className="user me-5"
             onClick={() => {
               showModal ? setShowModal(false) : setShowModal(true);
             }}
           >
             {props.admin ? (
-              <FontAwesomeIcon icon={faUserLock} size="2x" />
+              <FontAwesomeIcon
+                className="admin-icon"
+                icon={faUserLock}
+                size="2x"
+              />
             ) : (
-              <FontAwesomeIcon icon={faUserCircle} size="2x" />
+              <FontAwesomeIcon
+                className="user-icon"
+                icon={faUserCircle}
+                size="2x"
+              />
             )}
           </div>
           {showModal === true && (

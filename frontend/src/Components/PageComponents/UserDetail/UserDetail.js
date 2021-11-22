@@ -33,7 +33,7 @@ const UserDetail = (props) => {
         {props.admin ? (
           <h2>ADMIN</h2>
         ) : (
-          <Modal.Body>
+          <Modal.Body className="modal-body">
             <h5>Name</h5>
             <p>{`${[f_name]} ${[l_name]}`}</p>
             <h5>Email</h5>
@@ -49,9 +49,19 @@ const UserDetail = (props) => {
           </Modal.Body>
         )}
         <Modal.Footer>
-          <Button variant="secondary" onClick={logout}>
+          {/* <Button variant="secondary" onClick={logout}>
             Logout
-          </Button>
+          </Button> */}
+          <div className="text-center text-lg-start add-btn pt-2">
+            <button
+              type="button"
+              className="btn btn-primary btn-lg"
+              style={{ paddingLeft: 15, paddingRight: 15 }}
+              onClick={logout}
+            >
+              Logout
+            </button>
+          </div>
         </Modal.Footer>
       </Modal>
     </div>

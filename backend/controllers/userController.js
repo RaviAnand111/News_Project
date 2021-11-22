@@ -183,7 +183,7 @@ const getAllUsers = async (req, res) => {
 
 // add a news
 const addNews = async (req, res) => {
-  let now = new Date();
+  var now = new Date();
   try {
     let location = {
       country: req.body.country,
@@ -231,6 +231,8 @@ const addNews = async (req, res) => {
 
 // delete an existing news if admin is logged in
 const deleteNews = async (req, res) => {
+  console.log(req.body);
+
   const news_id = req.body.id;
   try {
     let news = await News.findOne({ where: { id: news_id } });

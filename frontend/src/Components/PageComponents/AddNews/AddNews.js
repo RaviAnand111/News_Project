@@ -201,7 +201,7 @@ const AddNews = (props) => {
         >
           <Modal.Title>Add the News</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body style={{ height: 1100 }}>
           <section className="">
             <div className="container-fluid h-custom vh-100">
               <div className="row d-flex justify-content-center align-items-center h-100">
@@ -383,11 +383,6 @@ const AddNews = (props) => {
             </div>
           </section>
         </Modal.Body>
-        {/* <Modal.Footer>
-          <Button variant="secondary" onClick={addnews}>
-            Add News
-          </Button>
-        </Modal.Footer> */}
       </Modal>
     </div>
   );
