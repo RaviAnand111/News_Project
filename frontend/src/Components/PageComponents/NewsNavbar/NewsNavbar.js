@@ -15,6 +15,17 @@ function NewsNavbar(props) {
   const [showNewsModal, setShowNewsModal] = useState(false);
   // props.setCategory("science");
 
+  function clicked(e) {
+    props.setCategory(e.target.name);
+    document.querySelectorAll(".nav-link").forEach((link) => {
+      if (link.name === e.target.name) {
+        e.target.style.borderBottom = "1px solid black";
+      } else {
+        link.style.border = "none";
+      }
+    });
+  }
+
   return (
     <div>
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -35,51 +46,58 @@ function NewsNavbar(props) {
         <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div className="navbar-nav">
             <Link
+              name="general"
               className="nav-item nav-link active"
               to="#"
-              onClick={() => props.setCategory("general")}
+              onClick={clicked}
             >
               Home <span className="sr-only">(current)</span>
             </Link>
             <Link
+              name="business"
               className="nav-item nav-link active"
               to="#"
-              onClick={() => props.setCategory("business")}
+              onClick={clicked}
             >
               Business <span className="sr-only">(current)</span>
             </Link>
             <Link
+              name="sports"
               className="nav-item nav-link active"
               to="#"
-              onClick={() => props.setCategory("sports")}
+              onClick={clicked}
             >
               Sports <span className="sr-only">(current)</span>
             </Link>
             <Link
+              name="health"
               className="nav-item nav-link active"
               to="#"
-              onClick={() => props.setCategory("health")}
+              onClick={clicked}
             >
               Health <span className="sr-only">(current)</span>
             </Link>
             <Link
+              name="entertainment"
               className="nav-item nav-link active"
               to="#"
-              onClick={() => props.setCategory("entertainment")}
+              onClick={clicked}
             >
               Entertainment <span className="sr-only">(current)</span>
             </Link>
             <Link
+              name="science"
               className="nav-item nav-link active"
               to="#"
-              onClick={() => props.setCategory("science")}
+              onClick={clicked}
             >
               Science <span className="sr-only">(current)</span>
             </Link>
             <Link
+              name="technology"
               className="nav-item nav-link active"
               to="#"
-              onClick={() => props.setCategory("technology")}
+              onClick={clicked}
             >
               Technology <span className="sr-only">(current)</span>
             </Link>
